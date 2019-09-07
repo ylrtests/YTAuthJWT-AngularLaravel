@@ -15,6 +15,9 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
+  private errorMessage: string = "Something's wrong."
+  private hasError: boolean = false;
+
   constructor(
     private authService: AuthService
   ) { }
@@ -28,7 +31,18 @@ export class LoginComponent implements OnInit {
       (data) =>{
         console.log(data)
       },
-      error => console.log(error))
+      (error) => {
+        this.handleError(error);
+      })
+  }
+
+  handleError(error){
+    this.errorMessage = error.error.error;
+    this.hasError = true;
+  }
+
+  onCloseAlert(){
+    this.hasError = false;
   }
 
 }

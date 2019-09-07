@@ -1,0 +1,15 @@
+.login-wrapper{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border:1px solid #e6e6e6;
+    padding: 20px;
+    width: 340px;
+    margin: 0 auto;
+    background-color: #fff;
+    
+}
+
+.login-footer{
+    text-align: center;
+}
