@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenService } from '../../../services/token.service';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -22,6 +23,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private tokenService: TokenService,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -33,19 +35,19 @@ export class SignupComponent implements OnInit {
     console.log("Llevo formulario")
     console.log(this.user)
     this.authService.signUp(this.user).subscribe( 
-      (data) =>{
-        console.log(data);
-        this.spinner.hide();
-      },
-      (error) => {
-        this.handleError(error);
-      })
+      data => this.handleResponse(data),
+      error => this.handleError(error))
   }
 
   handleError(error){
     this.spinner.hide();
     this.errorMessage = error.error.error;
     this.hasError = true;
+  }
+
+  handleResponse(data){
+    this.spinner.hide();
+    this.tokenService.handle(data.access_token);
   }
 
   onCloseAlert(){
