@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 
 import { AuthService } from '../../../services/auth.service'
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-login',
@@ -19,17 +20,19 @@ export class LoginComponent implements OnInit {
   private hasError: boolean = false;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
   }
 
   onSubmit(){
-    console.log("Llevo formulario")
+    this.spinner.show();
     this.authService.logIn(this.user).subscribe( 
       (data) =>{
         console.log(data)
+        this.spinner.hide();
       },
       (error) => {
         this.handleError(error);
@@ -37,6 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error){
+    this.spinner.hide();
     this.errorMessage = error.error.error;
     this.hasError = true;
   }

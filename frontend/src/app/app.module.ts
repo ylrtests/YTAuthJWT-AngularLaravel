@@ -12,7 +12,11 @@ import { ResponseResetComponent } from './components/accounts/password/response-
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 
+//Services
 import { AuthService } from './services/auth.service'
+
+//Externals
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { AuthService } from './services/auth.service'
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule
   ], 
   providers: [
     AuthService
