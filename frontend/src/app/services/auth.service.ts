@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  URL_API: String = "http://apiAngularLaravelJWT:8080/api"
+  URL_API: String = "http://apiAngularLaravelJWT:8080/api/auth"
 
   constructor(
     private http: HttpClient
@@ -16,6 +16,10 @@ export class AuthService {
 
   logIn(user: User): Observable<User>{
     return this.http.post<User>(`${this.URL_API}/login`, user)
+  }
+
+  signUp(user: User): Observable<User>{
+    return this.http.post<User>(`${this.URL_API}/signup`,user)
   }
 
   

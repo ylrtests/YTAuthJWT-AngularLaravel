@@ -1,0 +1,79 @@
+<section class="signup-section">
+    <div class="row mt-4">
+        <div class="signup-wrapper">
+            <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                <!-- Alert error server -->
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" [hidden]="!hasError">
+                    {{errorMessage}}
+                    <button type="button" class="close" (click)="onCloseAlert()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Form group name -->
+                <div class="form-group">
+                    <label for="name"><strong>Name</strong></label>
+                    <input type="name" class="form-control" name="name" placeholder="Name" [(ngModel)]="user.name"
+                        #name="ngModel" required
+                        [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched),'is-valid': name.valid }">
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+                        <div *ngIf="name.errors.required">Enter your name</div>
+                    </div>
+                </div>
+                <!-- Form group name -->
+                <div class="form-group">
+                    <label for="username"><strong>Username</strong></label>
+                    <input type="username" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username"
+                        #username="ngModel" required
+                        [ngClass]="{'is-invalid': username.invalid && (username.dirty || username.touched),'is-valid': username.valid }">
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="invalid-feedback">
+                        <div *ngIf="username.errors.required">Enter your username</div>
+                    </div>
+                </div>
+                <!-- Form group email -->
+                <div class="form-group">
+                    <label for="email"><strong>Email</strong></label>
+                    <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.email"
+                        #email="ngModel" required email
+                        [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched),'is-valid': email.valid }">
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+                        <div *ngIf="email.errors.required">Enter your email</div>
+                        <div *ngIf="email.errors.email">Enter a valid email</div>
+                    </div>
+                </div>
+                <!-- Form group password -->
+                <div class="form-group">
+                    <label for="password"><strong>Password</strong></label>
+                    <input type="password" class="form-control" name="password" placeholder="Password"
+                        [(ngModel)]="user.password" #password="ngModel" required minlength="6" [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched),
+                                                 'is-valid': password.valid }">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                        <div *ngIf="password.errors.required">Enter your password</div>
+                        <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                </div>
+                <!-- Form group confirm password -->
+                <div class="form-group">
+                    <label for="confirmPassword"><strong>Confirm password</strong></label>
+                    <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password"
+                        [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required minlength="6" [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched),
+                        'is-valid': confirmPassword.valid }">
+                    <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="confirmPassword.errors.required">Confirm your password</div>
+                    </div>
+                </div>
+                <!-- Button sign up -->
+                <div class="form-group">
+                    <button type="submit" [disabled]="f.form.invalid" class="btn btn-success w-100">Sign
+                        up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p class="mt-4 signup-footer">
+        Do you have an account?
+        <a routerLink="/accounts/login">Sign in</a>
+    </p>
+
+</section>

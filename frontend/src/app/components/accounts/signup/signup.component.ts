@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
-
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
-  private user: User = {
-    email: '',
-    password: ''
-  }
-
-  private errorMessage: string = "Something's wrong."
   private hasError: boolean = false;
+  private errorMessage: string = "Something's wrong."
+  private user: User = {
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
 
   constructor(
     private authService: AuthService
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     console.log("Llevo formulario")
-    this.authService.logIn(this.user).subscribe( 
+    console.log(this.user)
+    this.authService.signUp(this.user).subscribe( 
       (data) =>{
         console.log(data)
       },

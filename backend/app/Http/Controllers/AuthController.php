@@ -3,7 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Validator, DB, Hash, Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Mail\Message;
+use JWTAuth;
+
+use App\User;
 
 class AuthController extends Controller
 {
@@ -14,7 +23,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','signup']]);
     }
 
     /**
@@ -31,6 +40,67 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    /**
+     *  Users signs up and redirects if process is valid to login method
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function signup(Request $request)
+    {
+        //TODO validate password and matchpassword
+
+        $credentials = $request->only('name', 'email', 'password', 'username');
+
+        //Backend Validation 
+        $rules = [
+            'name' => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
+            'email' => 'required|max:255|email|unique:users',
+            'password' => 'required|min:6|'
+        ];
+
+        $validator = Validator::make($credentials, $rules);
+
+        // Fallo la validación del validador
+        if($validator->fails()) {
+            return response()->json([
+                'success'=> false, 
+                'error'=> $validator->messages()
+                ]);
+        }
+        
+        $name = $request->name;
+        $username = $request->username;
+        $email = $request->email;
+        $password = $request->password;
+        $confirmPassword = $request->confirmPassword;
+
+        //Contraseñas no son iguales
+        if($password != $confirmPassword){
+            return response()->json([
+                'success'=> false, 
+                'error'=> 'Password do not match.'
+                ]);
+        }
+        
+        try{
+            $user = User::create([
+                'name' => $name,
+                'username' => $username,
+                'email' => $email,
+                'password' => Hash::make($password)
+            ]);
+        }
+        catch(QueryException  $e){
+            return response()->json([
+                'success'=> false, 
+                'message'=> $e->errorInfo
+            ]);
+        }
+        
+       return $this->login($request);
     }
 
     /**
