@@ -12,6 +12,9 @@
                 <a class="nav-link" *ngIf="!isLogged" routerLink="/accounts/login">Login</a>
             </li>
             <li class="nav-item">
+                    <a class="nav-link" *ngIf="isLogged" routerLink="/favorites">Favorites</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" *ngIf="isLogged" routerLink="/profile">Profile</a>
             </li>
             <li class="nav-item" *ngIf="isLogged">
@@ -20,3 +23,4 @@
         </ul>
     </div>
 </nav>
+<ngx-spinner></ngx-spinner>

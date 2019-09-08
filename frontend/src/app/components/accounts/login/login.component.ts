@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.spinner.hide();
     this.tokenService.handle(data.access_token);
     this.authService.changeAuthStatus(true);
-    this.router.navigateByUrl('/profile');
+    this.router.navigateByUrl(this.authService.redirectUrl);
   }
 
   onCloseAlert(){

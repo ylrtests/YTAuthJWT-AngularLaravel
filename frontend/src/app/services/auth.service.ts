@@ -10,6 +10,8 @@ import { TokenService } from './token.service';
 })
 export class AuthService {
 
+  private _redirectUrl: string = "/profile";
+  private _loginUrl: string = '/accounts/login';
   private _isLoggedIn = new BehaviorSubject<boolean>(this.tokenService.isValid()); 
   private headers: HttpHeaders = new HttpHeaders();
 
@@ -20,7 +22,8 @@ export class AuthService {
     private http: HttpClient,
     private tokenService: TokenService
   ) { }
-
+  
+  //<----------- Http Requests ---------->
   logIn(user: User): Observable<User>{
     return this.http.post<User>(`${this.URL_API}/login`, user)
   }
@@ -41,6 +44,7 @@ export class AuthService {
     return this.http.post<User>(`${this.URL_API}/me`,{ headers: this.headers })
   }
 
+  //<----------- Other Methods ---------->
   changeAuthStatus(value: boolean){
     this._isLoggedIn.next(value);
   }
@@ -48,5 +52,16 @@ export class AuthService {
   get isLoggedIn(){
     return this._isLoggedIn
   }
+
+  get loginUrl(): string {
+		return this._loginUrl;
+	}
+
+  get redirectUrl(): string {
+		return this._redirectUrl;
+	}
+	set redirectUrl(url: string){
+		this._redirectUrl = url;
+	}
 
 }
