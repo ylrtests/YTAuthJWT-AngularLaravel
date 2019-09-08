@@ -13,13 +13,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RequestResetComponent } from './components/accounts/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/accounts/password/response-reset/response-reset.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { Notfound404Component } from './components/notfound404/notfound404.component';
 
 //Services
 import { AuthService } from './services/auth.service';
 
 //Externals
 import { NgxSpinnerModule } from "ngx-spinner";
-import { Notfound404Component } from './components/notfound404/notfound404.component';
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 
 @NgModule({
   declarations: [
@@ -38,10 +39,13 @@ import { Notfound404Component } from './components/notfound404/notfound404.compo
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SnotifyModule
   ], 
   providers: [
-    AuthService
+    AuthService,
+    SnotifyService,
+    {provide: 'SnotifyToastConfig', useValue: ToastDefaults}
   ],
   bootstrap: [AppComponent]
 })

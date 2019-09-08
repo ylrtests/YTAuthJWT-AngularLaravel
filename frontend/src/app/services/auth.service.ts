@@ -44,6 +44,10 @@ export class AuthService {
     return this.http.post<User>(`${this.URL_API}/me`,{ headers: this.headers })
   }
 
+  sendPasswordResetLink(form: Object){
+    return this.http.post(`${this.URL_API}/password/reset`, null)
+  }
+
   //<----------- Other Methods ---------->
   changeAuthStatus(value: boolean){
     this._isLoggedIn.next(value);
