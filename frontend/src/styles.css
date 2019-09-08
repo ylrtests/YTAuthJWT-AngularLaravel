@@ -2,3 +2,9 @@
 body{
     background-color: #f9f9f9
 }
+
+code {
+    font-size: 0.7rem;
+    display: block;
+    background-color: whitesmoke;
+}

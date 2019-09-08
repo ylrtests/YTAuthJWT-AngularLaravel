@@ -3,6 +3,7 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from '../../../services/token.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -24,6 +25,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
+    private router: Router,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -32,8 +34,6 @@ export class SignupComponent implements OnInit {
 
   onSubmit(){
     this.spinner.show();
-    console.log("Llevo formulario")
-    console.log(this.user)
     this.authService.signUp(this.user).subscribe( 
       data => this.handleResponse(data),
       error => this.handleError(error))
@@ -48,6 +48,8 @@ export class SignupComponent implements OnInit {
   handleResponse(data){
     this.spinner.hide();
     this.tokenService.handle(data.access_token);
+    this.authService.changeAuthStatus(true);
+    this.router.navigateByUrl('/profile');
   }
 
   onCloseAlert(){

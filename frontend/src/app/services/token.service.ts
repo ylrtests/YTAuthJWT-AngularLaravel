@@ -13,9 +13,6 @@ export class TokenService {
 
   handle(token){
     this.setToken(token);
-    console.log("payload...")
-    console.log(this.getDecodedPayload(token))
-    console.log(this.isValid())
   }
 
   setToken(token){
@@ -32,8 +29,10 @@ export class TokenService {
 
   isValid(){
     const token = this.getToken()
+    //Check if token exists 
     if(token){
       const payload = this.getDecodedPayload(token);
+      //Check token in localstorage if matches with iss (JWT)
       return Object.values(this.iss).indexOf(payload.iss) > -1  ? true : false;
     }
     else{

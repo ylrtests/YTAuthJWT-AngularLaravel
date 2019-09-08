@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service'
 import { TokenService } from '../../../services/token.service';
 
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
+    private router: Router,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -45,6 +47,8 @@ export class LoginComponent implements OnInit {
   handleResponse(data){
     this.spinner.hide();
     this.tokenService.handle(data.access_token);
+    this.authService.changeAuthStatus(true);
+    this.router.navigateByUrl('/profile');
   }
 
   onCloseAlert(){
