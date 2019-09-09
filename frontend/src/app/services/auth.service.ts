@@ -45,7 +45,11 @@ export class AuthService {
   }
 
   sendPasswordResetLink(form: Object){
-    return this.http.post(`${this.URL_API}/password/reset`, null)
+    return this.http.post(`${this.URL_API}/password/reset`, form)
+  }
+
+  resetPassword(user: User){
+    return this.http.post(`${this.URL_API}/password/change`, user)
   }
 
   //<----------- Other Methods ---------->
