@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../models/User'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { SnotifyService } from 'ng-snotify';
 
 @Component({
   selector: 'app-response-reset',
@@ -20,7 +21,9 @@ export class ResponseResetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private snotifyService: SnotifyService
   ) { }
 
   ngOnInit() {
@@ -38,11 +41,19 @@ export class ResponseResetComponent implements OnInit {
   }
 
   handleResponse(res){
-    console.log(res)
+    console.log(res);
+    this.router.navigateByUrl(this.authService.loginUrl);
   }
 
   handleError(err){
     console.log(err)
+    this.hasError = true;
+    this.errorMessage = err.error.error;
+    this.snotifyService.error('Ejemplo');
+  }
+
+  onCloseAlert(){
+    this.hasError = false;
   }
 
 }

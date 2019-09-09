@@ -31,16 +31,22 @@ export class RequestResetComponent implements OnInit {
   }
 
   handleResponse(res){
-    this.form.email = null;
-    this.snotifyService.success('Email has been sent');
-    console.log(res)
-    console.log("REspuesta")
+    this.snotifyService.success('We sent you an email', 'Success', {
+      timeout: 2000,
+      showProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true
+    });
   }
 
   handleError(err){
     this.form.email = null;
-    console.log(err)
+    this.hasError = true;
     this.snotifyService.error(err.error.error)
+  }
+
+  onCloseAlert(){
+    this.hasError = false;
   }
 
 }
